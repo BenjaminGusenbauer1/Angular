@@ -1,0 +1,21 @@
+<div class="ui container">
+  <br/>
+  <h1>Alle Bestellungen</h1>
+  <br/><br/>
+  <div *ngFor="let order of orders" class="ui middle aligned selection divided list">
+    <div class="item">
+      <div class="content">
+        <a class="header" [routerLink]="order.id">Bestellung Nummer {{order.number}} </a>
+        <div class="description">Aufgegeben am {{order.created_at | date: 'dd.MM.yyyy'}}
+          um {{order.created_at | date: 'hh:mm' : 'UTC+2'}} <br/>
+          <div *ngFor="let status of order.status last as l">
+            <div *ngIf="l" class="description">Aktueller Status: {{status.status}}</div>
+          </div>
+          <div class="description">Preis Netto: {{order.total_net}}, Preis Brutto: {{order.total_gross}}</div>
+        </div>
+      </div>
+    </div>
+    <br/>
+    <br/>
+  </div>
+</div>

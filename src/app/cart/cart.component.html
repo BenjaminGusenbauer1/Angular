@@ -1,0 +1,34 @@
+<h1>Warenkorb</h1>
+<div *ngIf="books && books.length" class="ui middle aligned selection divided list">
+  <div>
+    <a *ngFor="let book of books" class="item bs-cart-item" [book]="book">
+    </a>
+    <div *ngIf="!books" class="ui active dimmer">
+      <div class="ui large text loader">Daten werden geladen...</div>
+    </div>
+
+    <p *ngIf="books && !books.length">Es sind keine Bücher im Warenkorb.</p>
+
+
+    <div class="ui inverted divider"></div>
+
+    <button *ngIf="books && books.length && !authService.isLoggedIn()"
+            class="ui tiny blue labeled icon button right floated left aligned disabled" (click)="submitCart()">
+      <i class="shop icon"></i>Bestellung abschicken
+    </button>
+
+    <div *ngIf="!authService.isLoggedIn()" class="ui red label floated right">Sie müssen sich einloggen um bestellen zu können</div>
+
+    <button *ngIf="books && books.length && authService.isLoggedIn()"
+            class="ui tiny blue labeled icon button right floated left aligned" (click)="submitCart()">
+      <i class="shop icon"></i>Bestellung abschicken
+    </button>
+
+    <div *ngIf="books && books.length" class="right floated content price">
+      <div>Gesamtpreis netto: €{{getTotalNetValue()}}</div>
+      <div>Gesamtpreis brutto: €{{getTotalGrossValue()}}</div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!books">Der Warenkorb ist leer</div>

@@ -1,0 +1,17 @@
+<div class="ui middle aligned divided list">
+  <div class="item">
+    <img class="ui image tiny"  *ngIf="book.images && book.images[0]" [src]="book.images[0].url">
+
+    <div class="content">
+      <div class="header">{{ book.title }}</div>
+      <span class="description"> {{ book.subtitle }} </span>
+      <span *ngFor="let author of book.authors; last as l">
+             {{ author.firstName }} {{ author.lastName }}, <span *ngIf="!l">, </span>
+           </span>
+      <span class="extra">ISBN {{ book.isbn }}</span>
+    </div>
+
+    <div class="right floated content">Preis netto {{ book.price }}</div>
+    <div class="right floated content">Preis brutto {{ (book.price * 1.1).toFixed(2) }}</div>
+  </div>
+</div>

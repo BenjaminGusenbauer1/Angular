@@ -1,0 +1,60 @@
+<div class="container ui"  *ngIf="order">
+  <h1 class="ui header">Bestelldetails</h1>
+
+  <h2>Bestellung Nummer {{order.number}}</h2>
+
+  <h3 class="ui header">Aufgegeben am {{order.created_at | date: 'dd.MM.yyyy'}}
+    um {{order.created_at | date: 'hh:mm' : 'UTC+2'}}</h3>
+  <h3 class="ui header">Preis Netto: {{order.total_net}} Euro, Preis Brutto: {{order.total_gross}}Euro</h3>
+
+  <span *ngFor="let user of order.user; last as l">
+    <h3 *ngIf="l" class="ui header">Bestellt von {{user.name}}</h3>
+  </span>
+
+  <h2 class="ui header">Status: </h2>
+  <div *ngFor="let status of order.status">
+    <li>{{status.status}} ({{status.created_at | date: 'dd.MM.yyyy'}}
+      um {{order.created_at | date: 'hh:mm' : 'UTC+2'}}</li>
+  </div>
+
+  <h2 class="ui header">Neuer Status: </h2>
+  <select (input)="selectedStatus=$event.target.value" class="form-control">
+    <option value="Offen">Offen</option>
+    <option value="Bezahlt">Bezahlt</option>
+    <option value="Versendet">Versendet</option>
+    <option value="Storniert">Storniert</option>
+  </select>
+  <button type="submit" class="ui button" (click)="submitStatus(order)">Status Speichern</button>
+
+  <div class="ui divider"></div>
+
+  <h2 class="ui header">Bestellte Bücher:</h2>
+  <div class="ui grid" *ngFor="let book of order.books">
+    <div class="twelve wide column">
+      <h1 class="ui header">{{order.user_id}}{{ book.title }}</h1>
+      <h3 class="ui header">{{ book.subtitle }}</h3>
+      <div class="ui divider"></div>
+      <div class="ui grid">
+        <div class="four wide column">
+          <h4 class="ui header">Autoren</h4>
+          <span *ngFor="let author of book.authors; last as l">
+         {{ author.firstName }} {{ author.lastName }}<span *ngIf="!l">, </span>
+       </span>
+        </div>
+        <div class="four wide column">
+          <h4 class="ui header">ISBN</h4>
+          {{ book.isbn }}
+        </div>
+        <div class="four wide column">
+          <h4 class="ui header">Erschienen</h4>
+          {{ book.published }}
+        </div>
+        <div class="four wide column">
+          <h4 class="ui header">Rating</h4>
+          <i *ngFor="let r of getRating(book.rating)" class="yellow star icon"></i>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
